@@ -1,6 +1,6 @@
 <template>
 <header>
-    <a href="" @click.prevent><img src="../assets/media/logo.svg" alt="logo"></a>
+   <router-link :to="'/'"><img src="../assets/media/logo.svg" alt="logo"></router-link>
 </header>
 </template>
 <script>

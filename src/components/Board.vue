@@ -10,14 +10,14 @@
                <span>test123</span>
             </div>
           </div>
-          <a class="profileContent" href="" v-else>
-            <div class="imgBoxs inverted">
+          <div class="profileContent" v-else>
+            <!-- <div class="imgBoxs inverted">
               <img src="../assets/media/login.svg" alt="profile">
-            </div>
+            </div> -->
             <div class="text">
-               <span>로그인을 해주세요</span>
+                <router-link :to="'/login'">로그인을 해주세요</router-link>
             </div>
-          </a>
+          </div>
          </div>
          <div class="container" v-if="listDisplay">
             <ul class="btnBoxs">
@@ -34,7 +34,6 @@
                 <li><a href="" @click.prevent></a></li>
                 <li><a href="" @click.prevent></a></li>
                 <li><a href="" @click.prevent></a></li>
-
             </ul>
        </div>
        <div class="container" v-else>
@@ -49,41 +48,54 @@
                 <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg07.png" alt="img7"/></a></li>
             </ul>
        </div>
-
+       <Sidemenu v-if="this.isShowBoardSettings"/>
     </div>
 </template>
 <script>
+
+import Sidemenu from './Sidemenu.vue';
+import { mapState } from 'vuex';
+
  export default{
 
   data(){
     return{
-       listDisplay : false
+       listDisplay : false,
     }
+  },
+  computed : {
+    ...mapState({
+      isShowBoardSettings : 'isShowBoardSettings'
+     })
+  },
+  components : {
+     Sidemenu
   }
 
  }
 </script>
 <style>
+
   .boardList{
     padding:70px 5% 100px;
     width: calc(100vw - 10%);
     margin:0 auto;
-    background-color: #2d2e83;
+    background-color: #eaeaea;
   }
 
   .boardList .profileContainer{
     
     padding:5% 0 0;
     width:calc(100%);
-    height:200px;
+    height:150px;
     margin:0 auto;
 
   }
   .boardList .profileContainer .titles{
     padding-bottom:1%;
-    font-size: 2vw;
+    font-size: 1.5vw;
     letter-spacing: -1.5px;
-    color:#eaeaea;
+    color:#2d2e83;
     
   }
 
@@ -92,6 +104,8 @@
     padding:1rem 0;
     display: flex;
     align-content: center;
+    background-color:#2d2e83;
+    border-radius: 18px;
   }
 
   .boardList .profileContainer .profileContent .imgBoxs{
@@ -99,7 +113,7 @@
      display: flex;
      align-content: center;
      padding:10px;
-     width:3vw;
+     width:2vw;
 
   }
 
@@ -114,18 +128,23 @@
   }
   .boardList .profileContainer .profileContent .text{
 
-    width:30%;
+    width:calc(30% - 20px);
+    padding:0px 10px;
     display: flex;
     align-items: center;
 
   }
-  .boardList .profileContainer .profileContent .text span{
-    font-size: 1.5vw;
+  .boardList .profileContainer .profileContent .text a{
+    font-size: 1vw;
     color:#000;
     font-family: "Pretendard";
     font-weight: 400;
-    padding-left:3%;
+    padding-left:1%;
     letter-spacing: -1;
+    color:#eaeaea;
+  }
+
+  .boardList .profileContainer .profileContent .text a:visited{
     color:#eaeaea;
   }
 
@@ -140,9 +159,9 @@
   .boardList .container .tdTitle{
 
     padding:20px 0px;
-    font-size: 1.5vw;
+    font-size: 1vw;
     letter-spacing: -1;
-    color:#eaeaea;
+    color:#2d2e83;
   }
 
   .boardList .container ul{
@@ -206,6 +225,7 @@
     width: 100%;
     height: 100%;
     z-index:99;
+    font-size: 1vw;
     color:#eaeaea;
   }
 

@@ -22,14 +22,6 @@ button, input{ background-color: transparent; border: none;}
   margin: 0 auto;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
 /* 폰트관련 */
 
 @font-face {

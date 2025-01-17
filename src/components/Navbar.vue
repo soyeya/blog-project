@@ -1,19 +1,39 @@
 <template>
+    <div>
       <nav>
          <ul>
-            <li><a href=""><img src="../assets/media/menu.svg" alt="menu" @click.prevent></a></li>
-            <li><a href=""><img src="../assets/media/add.svg" alt="menu" @click.prevent></a></li>
-            <li v-if="loginDisplay"><a href=""><img src="../assets/media/logout.svg" alt="logout" @click.prevent></a></li>
-            <li v-else><a href=""><img src="../assets/media/login.svg" alt="login" @click.prevent></a></li>
+            <li><a href="" @click.prevent="sideMenuOpen"><img src="../assets/media/menu.svg" alt="menu"></a></li>
+            <li><a href="" @click.prevent><img src="../assets/media/add.svg" alt="menu"></a></li>
+            <li v-if="loginDisplay"><a href="" @click.prevent><img src="../assets/media/logout.svg" alt="logout"></a></li>
+            <li v-else><router-link :to="'/login'"><img src="../assets/media/login.svg" alt="login"></router-link></li>
          </ul>
       </nav>
+    </div>
 </template>
 <script>
+
+import { mapState, mapMutations } from 'vuex'
+
+
  export default{
+     computed : {
+         ...mapState({
+             isShowBoardSettings : 'isShowBoardSettings'
+       }),
+     },
     data(){
        return{
          loginDisplay : false,
        }
+    },
+    methods: {
+        ...mapMutations([
+             'SET_IS_SHOW_BOARD_SETTINGS'
+       ]),
+        sideMenuOpen(){
+           this.SET_IS_SHOW_BOARD_SETTINGS(true)
+           console.log(this.SET_IS_SHOW_BOARD_SETTINGS)
+        }
     }
 
  }

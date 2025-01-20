@@ -7,33 +7,82 @@
               <img src="../assets/media/profile.svg" alt="profile">
             </div>
             <div class="text">
-               <span>test123</span>
+               <h5 class="info">
+                  <p class="owner">test123</p>
+                  <p>Board 갯수 : <span>10</span>개</p>
+               </h5>
             </div>
           </div>
           <div class="profileContent" v-else>
-            <!-- <div class="imgBoxs inverted">
-              <img src="../assets/media/login.svg" alt="profile">
-            </div> -->
             <div class="text">
                 <router-link :to="'/login'">로그인을 해주세요</router-link>
             </div>
           </div>
          </div>
-         <div class="container" v-if="listDisplay">
+         <div class="container listContainer" v-if="listDisplay">
             <ul class="btnBoxs">
-                <li><button type="button"><img src="../assets/media/album.svg" alt="list"></button></li>
-                <li><button type="button"><img src="../assets/media/list.svg" alt="list"></button></li>
+                <li><button type="button" @click="changeListStyle1" ref="listBtn01" :class="'active'"><img src="../assets/media/album.svg" alt="list"></button></li>
+                <li><button type="button" @click="changeListStyle2" ref="listBtn02"><img src="../assets/media/list.svg" alt="list"></button></li>
             </ul>
-            <ul class="lists">
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
-                <li><a href="" @click.prevent></a></li>
+            <ul class="lists" v-if="listStyle1">
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg01.png" alt="img1"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg02.png" alt="img2"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg03.png" alt="img3"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg04.png" alt="img4"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg05.png" alt="img5"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg06.png" alt="img6"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg07.png" alt="img7"/></a></li>
+            </ul>
+            <ul class="lists secondList" v-if="listStyle2">
+                <li><a href="" @click.prevent>
+                  <h3>
+                     <p>웰컴투더 베이킹</p>
+                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
+                  </h3>
+                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
+                </a>
+              </li>
+                <li><a href="" @click.prevent>
+                  <h3>
+                     <p>웰컴투더 베이킹</p>
+                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
+                  </h3>
+                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
+                </a>
+              </li>
+                <li><a href="" @click.prevent>
+                  <h3>
+                     <p>웰컴투더 베이킹</p>
+                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
+                  </h3>
+                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
+                </a>
+              </li>
+                <li><a href="" @click.prevent>
+                  <h3>
+                     <p>웰컴투더 베이킹</p>
+                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
+                  </h3>
+                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
+                </a>
+              </li>
+                <li><a href="" @click.prevent>
+                  <h3>
+                     <p>웰컴투더 베이킹</p>
+                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
+                  </h3>
+                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
+                </a>
+              </li>
+                <li><a href="" @click.prevent>
+                  <h3>
+                     <p>웰컴투더 베이킹</p>
+                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
+                  </h3>
+                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
+                </a>
+              </li>
+             
             </ul>
        </div>
        <div class="container" v-else>
@@ -61,6 +110,8 @@ import { mapState } from 'vuex';
   data(){
     return{
        listDisplay : false,
+       listStyle1 : true,
+       listStyle2 : false,
     }
   },
   computed : {
@@ -70,6 +121,22 @@ import { mapState } from 'vuex';
   },
   components : {
      Sidemenu
+  },
+
+  methods : {
+     changeListStyle1(){
+        this.listStyle1 = true
+        this.listStyle2 = false
+        this.$refs.listBtn01.className = "active"
+        this.$refs.listBtn02.className = ""
+
+     },
+     changeListStyle2(){
+        this.listStyle2 = true
+        this.listStyle1 = false
+        this.$refs.listBtn02.className = "active"
+        this.$refs.listBtn01.className = ""
+     }
   }
 
  }
@@ -87,7 +154,6 @@ import { mapState } from 'vuex';
     
     padding:5% 0 0;
     width:calc(100%);
-    height:150px;
     margin:0 auto;
 
   }
@@ -113,7 +179,7 @@ import { mapState } from 'vuex';
      display: flex;
      align-content: center;
      padding:10px;
-     width:2vw;
+     width:5vw;
 
   }
 
@@ -132,16 +198,33 @@ import { mapState } from 'vuex';
     padding:0px 10px;
     display: flex;
     align-items: center;
+    color:#eaeaea;
+    font-size: 1vw;
+    font-family: "Pretendard";
 
   }
-  .boardList .profileContainer .profileContent .text a{
-    font-size: 1vw;
-    color:#000;
-    font-family: "Pretendard";
+
+  .boardList .profileContainer .profileContent .text h5{
+
     font-weight: 400;
+    font-size: 1.3vw;
+  }
+
+  .boardList .profileContainer .profileContent .text h5 p{
+    padding:3px 0px;
+    font-size: 1vw;
+  }
+
+  .boardList .profileContainer .profileContent .text h5 .owner{
+    font-size: 1.5vw;
+    font-weight: 600;
+  }
+ 
+  .boardList .profileContainer .profileContent .text a{
+
     padding-left:1%;
     letter-spacing: -1;
-    color:#eaeaea;
+
   }
 
   .boardList .profileContainer .profileContent .text a:visited{
@@ -154,6 +237,10 @@ import { mapState } from 'vuex';
     margin:0 auto;
     height: calc(100% / 2);
 
+  }
+
+  .boardList .listContainer{
+    
   }
 
   .boardList .container .tdTitle{
@@ -171,7 +258,6 @@ import { mapState } from 'vuex';
     align-content: center;
 
   }
-
   .boardList .container ul.btnBoxs{ 
     justify-content: flex-end;
     padding:10px 7% 10px 0;
@@ -180,14 +266,23 @@ import { mapState } from 'vuex';
   .boardList .container ul.btnBoxs li button{
     padding:10px 5px;
     cursor: pointer;
+    opacity: 0.5;
+    filter: grayscale(100);
+    -webkit-filter: grayscale(100);
+    -moz-filter: grayscale(100);
   }
 
+  .boardList .container ul.btnBoxs li button.active{
+    opacity: 1;
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+    -moz-filter: grayscale(0);
+  }
   .boardList .container ul.btnBoxs li button img{
     width: 2.5vw;
-    opacity: 0.5;
   }
 
-  .boardList .container ul.btnBoxs li button:hover > img{
+  .boardList .container ul.btnBoxs li button:hover{
     opacity: 1;
   }
 
@@ -196,22 +291,75 @@ import { mapState } from 'vuex';
     justify-content: space-between;
     gap:20px;
   }
+
   .boardList .container ul.lists li{
 
     width:calc(100% / 3 - 20px);
     height: 200px;
   }
 
+  .boardList .container ul.secondList li{
+
+     width: 100%;
+  }
+
   .boardList .container ul.lists li a{
     display: block;
     border-radius: 18px;
-    /* border:1px solid #333; */
     width: 100%;
     height: 100%;
     overflow: hidden;
     transition: 800ms;
     background-color: #000;
   }
+
+  .boardList .container ul.secondList li a{
+
+     border:solid 1px #bbb;
+     background-color: #f4f4f4;
+     display: flex;
+     align-content: center;
+     justify-content: space-between;
+
+  }
+
+  .boardList .container ul.secondList li a h3{
+
+    padding:3%;
+    width:calc(100% / 2 - 6%);
+  
+  }
+
+  .boardList .container ul.secondList li a h3 p{
+
+    font-size: 1.2vw;
+    color:#000;
+    padding:1%;
+    word-break: keep-all;
+    
+  }
+
+  .boardList .container ul.secondList li a h3 textarea{
+
+    word-break: keep-all;
+    font-size: 1vw;
+    color:#9f9f9f;
+    font-weight: normal;
+    border:none;
+    resize: none;
+    padding:1%;
+    width:calc(100%);
+    height: 50px;
+    overflow: hidden;
+    background: transparent;
+    cursor: pointer;
+
+  }
+
+  .boardList .container ul.secondList li a h3 textarea:focus{
+    outline: none;
+  }
+
 
   .boardList .container ul.beforeList li a{
     position: relative;
@@ -237,9 +385,20 @@ import { mapState } from 'vuex';
     opacity: 0.5;
   }
 
+  .boardList .container ul.secondList li a img{
+
+    width:calc(100% / 2.3);
+    height:100%;
+  }
   .boardList .container ul.lists li a:hover > img{
     opacity: 1;
     transform: scale(1.2);
+    transition: 800ms;
+  }
+
+  .boardList .container ul.secondList li a:hover > img{
+    opacity: 1;
+    transform: scale(1.1);
     transition: 800ms;
   }
 </style>

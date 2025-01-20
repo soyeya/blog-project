@@ -2,7 +2,7 @@
     <div class="loginWrapper">
     <div class="login">
       <h2>Log in to <strong>Look-Diary</strong></h2>
-      <form @submit.prevent>
+      <form @submit.prevent="onSubmit">
         <div>
           <label for="email">Email</label>
           <input class="form-control" type="text" name="email" 
@@ -13,8 +13,7 @@
           <input class="form-control" type="password" 
             v-model="password" placeholder="123123" />
         </div>
-        <button  class="btn" :class="{'btn-success': !invalidForm}" type="submit" 
-          >Log In</button>
+        <button  class="btn"  :class="{'btn-success': !invalidForm}" type="submit" :disabled="invalidForm">Log In</button>
       </form>
       <p class="error" v-if="error">{{error}}</p>
     </div>
@@ -22,6 +21,8 @@
   </template>
 <script>
 
+ import { mapActions } from 'vuex'
+ import axios from 'axios'
  export default{
 
 data() {
@@ -30,6 +31,26 @@ data() {
       password: '',
       error: '',
       rPath: ''
+    }
+  },
+  computed : {
+    invalidForm() {
+      return !this.email || !this.password
+    }
+  },
+  methods: {
+    ...mapActions([
+      'LOGIN'
+    ]),
+    onSubmit(){
+      try{
+        const res = axios.get('http://localhost:8888/api/login');
+        const res_data = res.data[0];
+        return console.log(res_data);
+        
+        }catch(err){
+          return err;
+        }
     }
   }
  }

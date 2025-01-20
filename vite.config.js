@@ -30,3 +30,18 @@ export default defineConfig({
     target: 'es5', // ES5 호환성 추가
   }
 })
+
+// module.exports = {
+//   devServer: {
+//     proxy : {
+//       '/api' : {
+//          target : 'http://localhost:8888/api',
+//          changeOrigin : true,
+//          pathRewrite : {
+//           '^/api' : ''
+//          }
+//       }
+//     }
+//   },
+//   outputDir : '../backend/public'
+// }

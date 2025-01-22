@@ -46,17 +46,26 @@ app.get("/", (req, res) => {
     res.send("myDiary Database")
 })
 
-app.get("/api/login" , (req, res) => {
+app.post("/api/login" , async(req, res) => {
 
 const sqlQuery = `SELECT * FROM LOGIN`;
+const values = await req.body; //post로 받은 email, password값
 try{
 DATASQL.db.query(sqlQuery, (err, results) => {
+
     if (err) {
     res.send({ error: '데이터 조회 실패' });
     return;
     }
+    if(values[0] === results[0].userId && values[1] === results[0].userPassword){
+      return res.send('true');
+    }else{
+      res.send('false'); 
+    }
     console.log(results);
-    res.send(results)});
+    console.log(values);
+ });
+    
 }catch(err){
     return `데이터 불러오기 오류, ${err}`
 }

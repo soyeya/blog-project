@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const actions = {
-
+ LOGIN(){
+    
+ }
 
 }
 

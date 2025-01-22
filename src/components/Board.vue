@@ -1,7 +1,8 @@
 <template>
     <div class="boardList">
          <div class="profileContainer">
-           <h3 class="titles">Hello, We Are Look-Diary</h3>
+          <h3 class="titles" v-if="listDisplay">어서오세요. test123님</h3>
+           <h3 class="titles" v-else>Hello, We Are Look-Diary</h3>
            <div class="profileContent" href="" v-if="listDisplay">
             <div class="imgBoxs">
               <img src="../assets/media/profile.svg" alt="profile">
@@ -97,13 +98,11 @@
                 <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg07.png" alt="img7"/></a></li>
             </ul>
        </div>
-       <Sidemenu v-if="this.isShowBoardSettings"/>
     </div>
 </template>
 <script>
 
-import Sidemenu from './Sidemenu.vue';
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
  export default{
 
@@ -114,21 +113,27 @@ import { mapState } from 'vuex';
        listStyle2 : false,
     }
   },
+  created(){
+     this.LoginState()
+  },
   computed : {
     ...mapState({
-      isShowBoardSettings : 'isShowBoardSettings'
-     })
+      token : 'token'
+     }),
   },
-  components : {
-     Sidemenu
-  },
-
   methods : {
+    LoginState(){
+       if(this.token){
+        return this.listDisplay = true
+       }
+       return this.listDisplay = false
+     },
      changeListStyle1(){
         this.listStyle1 = true
         this.listStyle2 = false
         this.$refs.listBtn01.className = "active"
         this.$refs.listBtn02.className = ""
+        console.log(this.token)
 
      },
      changeListStyle2(){

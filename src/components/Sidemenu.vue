@@ -1,5 +1,5 @@
 <template>
-  <div class="board-menu" v-if="this.isShowBoardSettings">
+  <div class="board-menu" v-if="showBoard">
     <div class="board-menu-header">
       <h3 class="header-title">Board Design</h3>
       <a class="header-close-btn" href="" @click.prevent="onClose">&times;</a>
@@ -23,10 +23,15 @@ import { mapState, mapMutations } from 'vuex';
  export default{
     data(){
         return{ 
+          showBoard : this.isShowBoardSettings,
         }
+    },
+    created(){
+      this.showBoardState()
     },
     computed : {
        ...mapState({
+        token : 'token',
         isShowBoardSettings : 'isShowBoardSettings'
        })
     },
@@ -34,8 +39,17 @@ import { mapState, mapMutations } from 'vuex';
       ...mapMutations([
         'SET_IS_SHOW_BOARD_SETTINGS'
       ]),
+      showBoardState(){
+        if(this.token){
+          return this.SET_IS_SHOW_BOARD_SETTINGS(true),
+          this.showBoard = true
+        }
+         return this.SET_IS_SHOW_BOARD_SETTINGS(false),
+         this.showBoard = false
+      },
       onClose() {
-      this.SET_IS_SHOW_BOARD_SETTINGS(false)
+      this.SET_IS_SHOW_BOARD_SETTINGS(false),
+      this.showBoard = this.isShowBoardSettings
       console.log('동작')
 
     },

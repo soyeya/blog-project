@@ -6,7 +6,7 @@
         <div>
           <label for="email">Email</label>
           <input class="form-control" type="text" name="email" 
-            v-model="email" autofocus placeholder="e.g.,test123@test123.com" />
+            v-model="email" autofocus placeholder="e.g.,test123" />
         </div>
         <div>
           <label for="password">Password</label>
@@ -21,7 +21,7 @@
   </template>
 <script>
 
- import { mapActions } from 'vuex'
+ import { mapState, mapMutations } from 'vuex'
  import axios from 'axios'
  export default{
 
@@ -30,23 +30,33 @@ data() {
       email: '',
       password: '',
       error: '',
-      rPath: ''
+      rPath: '',
     }
   },
   computed : {
+    ...mapState({
+       token : 'token'
+    }),
     invalidForm() {
       return !this.email || !this.password
     }
   },
   methods: {
-    ...mapActions([
+    ...mapMutations([
       'LOGIN'
-    ]),
-    onSubmit(){
+     ]),
+    async onSubmit(){
+      const array = [this.email, this.password]
       try{
-        const res = axios.get('http://localhost:8888/api/login');
-        const res_data = res.data[0];
-        return console.log(res_data);
+        const res = await axios.post('http://localhost:8888/api/login', array);
+        const data = res.data;
+        console.log(data)
+        if(data === true){
+          return this.token = true,
+           this.$router.push('/'),
+           this.LOGIN(true);
+        }
+        return window.confirm('아이디와 비밀번호가 일치하지 않습니다');
         
         }catch(err){
           return err;

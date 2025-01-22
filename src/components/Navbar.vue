@@ -4,39 +4,60 @@
          <ul>
             <li><a href="" @click.prevent="sideMenuOpen"><img src="../assets/media/menu.svg" alt="menu"></a></li>
             <li><a href="" @click.prevent><img src="../assets/media/add.svg" alt="menu"></a></li>
-            <li v-if="loginDisplay"><a href="" @click.prevent><img src="../assets/media/logout.svg" alt="logout"></a></li>
+            <li v-if="loginDisplay"><a href="" @click="LogoutEvet"><img src="../assets/media/logout.svg" alt="logout"></a></li>
             <li v-else><router-link :to="'/login'"><img src="../assets/media/login.svg" alt="login"></router-link></li>
          </ul>
       </nav>
+      <Sidemenu/>
     </div>
 </template>
 <script>
 
 import { mapState, mapMutations } from 'vuex'
+import Sidemenu from './Sidemenu.vue'
 
 
  export default{
+  components: { Sidemenu },
      computed : {
          ...mapState({
+             token : 'token',
              isShowBoardSettings : 'isShowBoardSettings'
        }),
      },
     data(){
        return{
          loginDisplay : false,
+         showBoard : false,
        }
+    },
+    created(){
+       this.LoginState()
     },
     methods: {
         ...mapMutations([
-             'SET_IS_SHOW_BOARD_SETTINGS'
+            'LOGOUT',
+            'SET_IS_SHOW_BOARD_SETTINGS'
        ]),
+       LoginState(){
+       if(this.token){
+        return this.loginDisplay = true
+       }
+        return this.loginDisplay = false
+       },
+       LogoutEvet(){
+        return this.LOGOUT(false),
+        this.loginDisplay = false
+        }
+       },
         sideMenuOpen(){
-           this.SET_IS_SHOW_BOARD_SETTINGS(true)
+          if(this.token){
+           return this.SET_IS_SHOW_BOARD_SETTINGS(true),
            console.log(this.SET_IS_SHOW_BOARD_SETTINGS)
+          }
         }
     }
 
- }
 </script>
 <style>
 

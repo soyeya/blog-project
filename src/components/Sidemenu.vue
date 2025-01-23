@@ -40,7 +40,7 @@ import { mapState, mapMutations } from 'vuex';
         'SET_IS_SHOW_BOARD_SETTINGS'
       ]),
       showBoardState(){
-        if(this.token){
+        if(this.isShowBoardSettings){
           return this.SET_IS_SHOW_BOARD_SETTINGS(true),
           this.showBoard = true
         }

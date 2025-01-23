@@ -72,7 +72,22 @@ DATASQL.db.query(sqlQuery, (err, results) => {
 
 })
 
+app.get("/api/list" , async(req, res) => {
 
+  const sqlQuery = `SELECT * FROM DETAIL`;
+  try{
+    DATASQL.db.query(sqlQuery, (err, results) => {
+        if (err) {
+        res.send({ error: '데이터 조회 실패' });
+        return;
+        }
+        res.send(results);
+        console.log(results);
+     });
+    }catch(err){
+        return `데이터 불러오기 오류, ${err}`
+    }
+})
  
 server.listen(PORT, ()=>{
     console.log(`${PORT}로 작동중`);

@@ -10,7 +10,7 @@
             <div class="text">
                <h5 class="info">
                   <p class="owner">test123</p>
-                  <p>Board 갯수 : <span>10</span>개</p>
+                  <p>Board 갯수 : <span>{{lists.length}}</span>개</p>
                </h5>
             </div>
           </div>
@@ -26,76 +26,35 @@
                 <li><button type="button" @click="changeListStyle2" ref="listBtn02"><img src="../assets/media/list.svg" alt="list"></button></li>
             </ul>
             <ul class="lists" v-if="listStyle1">
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg01.png" alt="img1"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg02.png" alt="img2"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg03.png" alt="img3"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg04.png" alt="img4"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg05.png" alt="img5"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg06.png" alt="img6"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg07.png" alt="img7"/></a></li>
+                <li v-for="v in lists" :key="`${v.id}`">
+                  <a href="" class="alburm" @click.prevent>
+                    <img :src="`/src/assets/media/board/${v.img}.png`" :alt="`alburmImg+${v.id}`" />
+                    <span>{{v.title}}</span>
+                  </a>
+                </li>
             </ul>
             <ul class="lists secondList" v-if="listStyle2">
-                <li><a href="" @click.prevent>
+                <li v-for="v in lists" :key="`list+${v.id}`">
+                <a href="" @click.prevent>
                   <h3>
-                     <p>웰컴투더 베이킹</p>
-                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
+                     <p>{{v.title}}</p>
+                     {{v.content}}
                   </h3>
-                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
+                  <img :src="`/src/assets/media/board/${v.img}.png`" :alt="`listImg+${v.id}`" />
                 </a>
               </li>
-                <li><a href="" @click.prevent>
-                  <h3>
-                     <p>웰컴투더 베이킹</p>
-                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
-                  </h3>
-                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
-                </a>
-              </li>
-                <li><a href="" @click.prevent>
-                  <h3>
-                     <p>웰컴투더 베이킹</p>
-                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
-                  </h3>
-                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
-                </a>
-              </li>
-                <li><a href="" @click.prevent>
-                  <h3>
-                     <p>웰컴투더 베이킹</p>
-                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
-                  </h3>
-                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
-                </a>
-              </li>
-                <li><a href="" @click.prevent>
-                  <h3>
-                     <p>웰컴투더 베이킹</p>
-                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
-                  </h3>
-                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
-                </a>
-              </li>
-                <li><a href="" @click.prevent>
-                  <h3>
-                     <p>웰컴투더 베이킹</p>
-                     <textarea readonly>오늘의 다이어리 기록은 베이킹이다.</textarea>
-                  </h3>
-                  <img src="../assets/media/board/beforeImg01.png" alt="img1"/>
-                </a>
-              </li>
-             
             </ul>
        </div>
        <div class="container" v-else>
             <h5 class="tdTitle">오늘의 Look-Diary 기록</h5>
             <ul class="lists beforeList">
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg01.png" alt="img1"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg02.png" alt="img2"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg03.png" alt="img3"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg04.png" alt="img4"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg05.png" alt="img5"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg06.png" alt="img6"/></a></li>
-                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg07.png" alt="img7"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg1.png" alt="img1"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg2.png" alt="img2"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg3.png" alt="img3"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg4.png" alt="img4"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg5.png" alt="img5"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg6.png" alt="img6"/></a></li>
+                <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg7.png" alt="img7"/></a></li>
             </ul>
        </div>
     </div>
@@ -103,14 +62,15 @@
 <script>
 
 import { mapMutations, mapState } from 'vuex';
+import axios from 'axios';
 
  export default{
-
   data(){
     return{
        listDisplay : false,
        listStyle1 : true,
        listStyle2 : false,
+       lists : []
     }
   },
   created(){
@@ -122,9 +82,23 @@ import { mapMutations, mapState } from 'vuex';
      }),
   },
   methods : {
+    async callList(){
+      try{
+          const res = await axios.get('http://localhost:8888/api/list');
+          const data = res.data;
+          console.log(data);
+          data.forEach((v) => {
+             this.lists.push(v)
+            })
+          console.log(this.lists)
+        }catch(error){
+           return console.log(error)
+        }
+    },
     LoginState(){
        if(this.token){
-        return this.listDisplay = true
+        return this.listDisplay = true,
+        this.callList()
        }
        return this.listDisplay = false
      },
@@ -192,6 +166,7 @@ import { mapMutations, mapState } from 'vuex';
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    filter: invert(100);
   }
 
   .boardList .profileContainer .profileContent .inverted img{
@@ -265,7 +240,7 @@ import { mapMutations, mapState } from 'vuex';
   }
   .boardList .container ul.btnBoxs{ 
     justify-content: flex-end;
-    padding:10px 7% 10px 0;
+    padding:10px 0px;
   }
 
   .boardList .container ul.btnBoxs li button{
@@ -309,13 +284,28 @@ import { mapMutations, mapState } from 'vuex';
   }
 
   .boardList .container ul.lists li a{
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 18px;
     width: 100%;
     height: 100%;
     overflow: hidden;
     transition: 800ms;
     background-color: #000;
+
+  
+  }
+
+  .boardList .container ul.lists li .alburm{
+    position: relative;
+  }
+
+  .boardList .container ul.lists li a span{
+    color:#f4f4f4;
+    font-size: 1vw;
+    position: absolute;
+
   }
 
   .boardList .container ul.secondList li a{
@@ -326,45 +316,31 @@ import { mapMutations, mapState } from 'vuex';
      align-content: center;
      justify-content: space-between;
 
+
   }
 
   .boardList .container ul.secondList li a h3{
 
     padding:3%;
     width:calc(100% / 2 - 6%);
+    font-weight: normal;
+    color:#ccc;
+    font-size: 1vw;
+    line-height: 1.5;
+    word-break: keep-all;
+    
   
   }
 
   .boardList .container ul.secondList li a h3 p{
 
-    font-size: 1.2vw;
+    font-size: 1.3vw;
     color:#000;
-    padding:1%;
+    font-weight: 600;
+    padding-bottom:1.5%;
     word-break: keep-all;
     
   }
-
-  .boardList .container ul.secondList li a h3 textarea{
-
-    word-break: keep-all;
-    font-size: 1vw;
-    color:#9f9f9f;
-    font-weight: normal;
-    border:none;
-    resize: none;
-    padding:1%;
-    width:calc(100%);
-    height: 50px;
-    overflow: hidden;
-    background: transparent;
-    cursor: pointer;
-
-  }
-
-  .boardList .container ul.secondList li a h3 textarea:focus{
-    outline: none;
-  }
-
 
   .boardList .container ul.beforeList li a{
     position: relative;
@@ -394,6 +370,7 @@ import { mapMutations, mapState } from 'vuex';
 
     width:calc(100% / 2.3);
     height:100%;
+    opacity: 0.8;
   }
   .boardList .container ul.lists li a:hover > img{
     opacity: 1;
@@ -402,7 +379,6 @@ import { mapMutations, mapState } from 'vuex';
   }
 
   .boardList .container ul.secondList li a:hover > img{
-    opacity: 1;
     transform: scale(1.1);
     transition: 800ms;
   }

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from '@/components/Login.vue'
 import store from '@/stores'
+import Detail from '@/components/Detail.vue'
 
 // const requireAuth = (to, from, next) => {
 //   const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/login',
       name : 'login',
       component : Login
+    },
+    {
+      path: '/detail/:id',
+      name : 'detail',
+      component : Detail
     }
   ],
 })

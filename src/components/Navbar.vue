@@ -4,7 +4,7 @@
          <ul>
             <li><button type="button" @click="sideMenuOpen"><img src="../assets/media/menu.svg" alt="menu"></button></li>
             <li><button type="button"><img src="../assets/media/add.svg" alt="menu"></button></li>
-            <li v-if="loginDisplay"><a href="" @click="LogoutEvet"><img src="../assets/media/logout.svg" alt="logout"></a></li>
+            <li v-if="loginDisplay"><a href="/" @click="LogoutEvet"><img src="../assets/media/logout.svg" alt="logout"></a></li>
             <li v-else><router-link :to="'/login'"><img src="../assets/media/login.svg" alt="login"></router-link></li>
          </ul>
       </nav>
@@ -134,7 +134,7 @@ nav ul li a img, nav ul li button img{
   left: 0;
   top: 0;
   height: 100%;
-  background-color: #eaeaea;
+  background-color: #fff;
   width: 300px;
   transition: all .5s;
   z-index:99999;

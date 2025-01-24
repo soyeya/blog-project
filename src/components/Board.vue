@@ -5,7 +5,7 @@
            <h3 class="titles" v-else>Hello, We Are Look-Diary</h3>
            <div class="profileContent" href="" v-if="listDisplay">
             <div class="imgBoxs">
-              <img src="../assets/media/profile.svg" alt="profile">
+              <img src="../assets/media/profile.png" alt="profile">
             </div>
             <div class="text">
                <h5 class="info">
@@ -27,21 +27,21 @@
             </ul>
             <ul class="lists" v-if="listStyle1">
                 <li v-for="v in lists" :key="`${v.id}`">
-                  <a href="" class="alburm" @click.prevent>
+                  <router-link :to="`/detail/${v.id}`" class="alburm">
                     <img :src="`/src/assets/media/board/${v.img}.png`" :alt="`alburmImg+${v.id}`" />
                     <span>{{v.title}}</span>
-                  </a>
+                  </router-link>
                 </li>
             </ul>
             <ul class="lists secondList" v-if="listStyle2">
                 <li v-for="v in lists" :key="`list+${v.id}`">
-                <a href="" @click.prevent>
+                <router-link :to="`/detail/${v.id}`">
                   <h3>
                      <p>{{v.title}}</p>
                      {{v.content}}
                   </h3>
                   <img :src="`/src/assets/media/board/${v.img}.png`" :alt="`listImg+${v.id}`" />
-                </a>
+                </router-link>
               </li>
             </ul>
        </div>
@@ -166,12 +166,8 @@ import axios from 'axios';
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    filter: invert(100);
   }
 
-  .boardList .profileContainer .profileContent .inverted img{
-    filter:invert(100)
-  }
   .boardList .profileContainer .profileContent .text{
 
     width:calc(30% - 20px);
@@ -264,6 +260,9 @@ import axios from 'axios';
 
   .boardList .container ul.btnBoxs li button:hover{
     opacity: 1;
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+    -moz-filter: grayscale(0);
   }
 
   .boardList .container ul.lists{

@@ -1,5 +1,6 @@
 <template>
     <div class="detailsWrap">
+        <Headerbar :show="true"/>
         <Navbar />
         <div class="title">
              <h3>{{title}}</h3>
@@ -11,15 +12,17 @@
         <div class="content">
             <textarea readonly :placeholder="value"></textarea>
         </div>
+    
     </div>
 </template>
 <script>
 import { mapState } from 'vuex';
 import axios from 'axios';
 import Navbar from './Navbar.vue';
+import Headerbar from './Headerbar.vue';
 
 export default{
-  components: { Navbar },
+  components: { Navbar, Headerbar },
      data(){
         return{
            lists : [],
@@ -81,7 +84,7 @@ export default{
 
 .detailsWrap .title h3{
 
-    font-size: 2vw;
+    font-size: 1.8vw;
     text-align: center;
     font-weight: 600;
     letter-spacing: -1px;
@@ -133,7 +136,7 @@ export default{
    height:calc(100vh - 340px);
    padding:10px;
    letter-spacing: -1px;
-   font-size: 1.5vw;
+   font-size: 1.2vw;
    line-height: 1.5;
    word-break: keep-all;
    border:none;

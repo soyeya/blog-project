@@ -3,12 +3,12 @@
       <nav>
          <ul>
             <li><button type="button" @click="sideMenuOpen"><img src="../assets/media/menu.svg" alt="menu"></button></li>
-            <li><button type="button"><img src="../assets/media/add.svg" alt="menu"></button></li>
+            <li><button type="button" @click="addBoard"><img src="../assets/media/add.svg" alt="menu"></button></li>
             <li v-if="loginDisplay"><a href="/" @click="LogoutEvet"><img src="../assets/media/logout.svg" alt="logout"></a></li>
             <li v-else><router-link :to="'/login'"><img src="../assets/media/login.svg" alt="login"></router-link></li>
          </ul>
       </nav>
-    <!--sideMenuBar-->
+<!--sideMenuBar-->
 <div class="sideMenuWrap" v-if="showBoard">
   <div class="board-menu" v-if="loginDisplay">
     <div class="board-menu-header">
@@ -36,14 +36,16 @@
     </ul>
    </div>
   </div>
+<!---->
   </div>
 </template>
 <script>
 
 import { mapState, mapMutations } from 'vuex'
-
+import AddBoard from './AddBoard.vue'
 
  export default{
+  components: { AddBoard },
     data(){
        return{
          loginDisplay : false,
@@ -55,12 +57,14 @@ import { mapState, mapMutations } from 'vuex'
     },
     computed : {
         ...mapState({
-            token : 'token'
+            token : 'token',
+            isAddBoard : 'isAddBoard'
         }),
      },
     methods: {
     ...mapMutations([
         'LOGOUT',
+        'SET_IS_ADD_BOARD'
     ]),
     LoginState(){ 
      if(this.token){ return this.loginDisplay = true }
@@ -76,6 +80,12 @@ import { mapState, mapMutations } from 'vuex'
     onClose() {
         this.showBoard = false
     },
+    addBoard(){
+      if(this.token){
+        return this.SET_IS_ADD_BOARD(true)
+      }
+      return this.SET_IS_ADD_BOARD(false)
+    }
    }
  }
 

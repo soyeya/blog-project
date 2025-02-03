@@ -1,5 +1,6 @@
 <template>
     <div class="loginWrapper">
+    <Headerbar/>
     <div class="login">
       <h2>Log in to <strong>Look-Diary</strong></h2>
       <form @submit.prevent="onSubmit">
@@ -23,8 +24,9 @@
 
  import { mapState, mapMutations } from 'vuex'
  import axios from 'axios'
+import Headerbar from './Headerbar.vue'
  export default{
-
+ components: { Headerbar },
 data() {
     return {
       email: '',
@@ -126,6 +128,7 @@ input[type=text].form-control,
 input[type=password].form-control,
 textarea.form-control {
   font-size: 14px;
+  resize: none;
 }
 .form-control:focus {
   background-color: #fff;

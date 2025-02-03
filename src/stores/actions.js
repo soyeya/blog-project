@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const actions = {
- LOGIN(){
-    
+ updatePathname({commit}, path){
+    commit('setPathname', path)
  }
 
 }

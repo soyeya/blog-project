@@ -1,14 +1,46 @@
 <template>
 <header>
-   <router-link :to="'/'"><img src="../assets/media/logo.svg" alt="logo"></router-link>
+   <button type="button" v-if="toBack" @click="toBackEvet"></button>
+   <router-link :to="'/'" ><img src="../assets/media/logo.svg" alt="logo"></router-link>
 </header>
 </template>
 <script>
+import { mapState , mapMutations } from 'vuex';
 
 export default{
-
+ props : ["show"],
+ data(){
+   return{
+      toBack : this.show,
+      paths : this.$route.path
+   }
+ },
+ computed : {
+   ...mapState({
+      pathName : 'pathName'
+   }),
+ },
+  created(){
+  this.currentPathname()
+  console.log(this.pathName)
+  console.log(this.toBack)
+ },
+ methods :{
+   ...mapMutations([
+      'setPathname'
+   ]),
+   currentPathname(){
+      this.setPathname(this.paths)
+      if(this.paths.indexOf('/detail') != -1){
+         return this.toBack = true
+      }
+      console.log(this.paths)
+   },
+   toBackEvet(){
+     return this.$router.push('/')
+   }
+ }
 }
-
 </script>
 
 <style>
@@ -21,12 +53,12 @@ export default{
     width: 100vw;
     height: 70px;
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
+    gap:30px;
     background-color: #eaeaea;
     border-bottom:1px solid #2d2e83;
     z-index:99999;
-    /* background-color:#2d2e83; */
 
  }
 
@@ -39,6 +71,20 @@ export default{
     justify-content: center;
  }
 
+ header button{
+   font-size: inherit;
+   color:#333;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   width: 1.3vw;
+   height: 1.3vw;
+   background-image: url('../assets/media/arrowBefore.png');
+   background-position: center center;
+   background-repeat: no-repeat;
+   background-size: contain;
+ }
 header a img{
      width: 100%;
      display: block;

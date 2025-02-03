@@ -57,20 +57,24 @@
                 <li><a href="" @click.prevent><img src="../assets/media/board/beforeImg7.png" alt="img7"/></a></li>
             </ul>
        </div>
+       <AddBoard v-if="this.isAddBoard"/>
     </div>
 </template>
 <script>
 
 import { mapMutations, mapState } from 'vuex';
 import axios from 'axios';
+import AddBoard from './AddBoard.vue';
 
  export default{
+  components:{ AddBoard },
   data(){
     return{
+     
        listDisplay : false,
        listStyle1 : true,
        listStyle2 : false,
-       lists : []
+       lists : [],
     }
   },
   created(){
@@ -78,10 +82,15 @@ import axios from 'axios';
   },
   computed : {
     ...mapState({
-      token : 'token'
+      token : 'token',
+      isAddBoard : 'isAddBoard',
+      lastId : 'lastId'
      }),
   },
   methods : {
+    ...mapMutations([
+      'setId'
+    ]),
     async callList(){
       try{
           const res = await axios.get('http://localhost:8888/api/list');
@@ -90,7 +99,9 @@ import axios from 'axios';
           data.forEach((v) => {
              this.lists.push(v)
             })
+          this.setId(data[data.length - 1].id)
           console.log(this.lists)
+          console.log(this.lastId)
         }catch(error){
            return console.log(error)
         }

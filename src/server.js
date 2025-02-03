@@ -88,6 +88,27 @@ app.get("/api/list" , async(req, res) => {
         return `데이터 불러오기 오류, ${err}`
     }
 })
+
+app.post("/api/addList" , async(req, res) => {
+
+  const values = await req.body;
+  const newList = `INSERT INTO DETAIL(id, title, content, img) VALUES('${values[0]}','${values[1]}','${values[2]}','${values[3]}')`;
+  const sqlQuery = `SELECT * FROM DETAIL`;
+  try{
+    DATASQL.db.query(sqlQuery, (err, results) => {
+    
+        if (err) {
+        res.send({ error: '데이터 조회 실패' });
+        return;
+        }
+        console.log(results);
+        console.log(values);
+     });
+        
+    }catch(err){
+        return `데이터 불러오기 오류, ${err}`
+    }
+})
  
 server.listen(PORT, ()=>{
     console.log(`${PORT}로 작동중`);

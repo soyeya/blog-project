@@ -16,14 +16,14 @@
       </form>
     </template>
     <template #bottom>
-      <button class="btn" :class="{'btn-success': valid}"  type="submit" 
-        form="add-board-form" :disabled="!valid">
+      <button class="btn" :class="{'btn-success': valid1 && valid2}"  type="submit" 
+        form="add-board-form" :disabled="!valid1 && valid2">
         Create Board</button>
     </template>
     </Modal>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import Modal from './Modal.vue';
 import axios from 'axios';
 
@@ -33,13 +33,17 @@ export default{
         return{
             input : '',
             contents : '',
-            valid : false,
-            imgs : 'beforeImg7.png'
+            valid1 : false,
+            valid2 : false,
+            imgs : 'beforeImg7'
         }
     },
     watch : {
         input(v){
-            this.valid = v.trim().length > 0
+            this.valid1 = v.trim().length > 0
+        },
+        contents(v){
+            this.valid2 = v.trim().length > 0
         }
     },
     computed : {
@@ -49,18 +53,29 @@ export default{
         })
     },
     methods : {
+        ...mapActions([
+            'ADD_BORAD_DATA',
+            'SET_LIST',
+        ]),
         ...mapMutations([
             'SET_IS_ADD_BOARD',
+            'SET_CALLING_BOARD',
+            'SET_ID'
         ]),
+
+
         async addBoardData(){
-            const formArray = [this.lastId+1, this.input, this.contents, this.imgs]
+            const formArray = [this.lastId+1, this.input, this.contents, this.imgs]//전달할 배열
+            if(this.valid1 && this.valid2){
             try{
-            const res = await axios.post('http://localhost:8888/api/addList', formArray)
-            const data = res.data;
-            console.log(data)
+            const res = await this.ADD_BORAD_DATA(formArray)
             }catch(err){
                 return console.log('addBoard_err')
             }
+            this.SET_IS_ADD_BOARD(false);
+            this.SET_CALLING_BOARD(false);
+            }
+        
         }
     }
 

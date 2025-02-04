@@ -10,7 +10,7 @@
             <div class="text">
                <h5 class="info">
                   <p class="owner">test123</p>
-                  <p>Board 갯수 : <span>{{lists.length}}</span>개</p>
+                  <p>Board 갯수 : <span>{{this.nowList.length}}</span>개</p>
                </h5>
             </div>
           </div>
@@ -26,7 +26,7 @@
                 <li><button type="button" @click="changeListStyle2" ref="listBtn02"><img src="../assets/media/list.svg" alt="list"></button></li>
             </ul>
             <ul class="lists" v-if="listStyle1">
-                <li v-for="v in lists" :key="`${v.id}`">
+                <li v-for="v in this.nowList" :key="`${v.id}`">
                   <router-link :to="`/detail/${v.id}`" class="alburm">
                     <img :src="`/src/assets/media/board/${v.img}.png`" :alt="`alburmImg+${v.id}`" />
                     <span>{{v.title}}</span>
@@ -34,7 +34,7 @@
                 </li>
             </ul>
             <ul class="lists secondList" v-if="listStyle2">
-                <li v-for="v in lists" :key="`list+${v.id}`">
+                <li v-for="v in this.nowList" :key="`list+${v.id}`">
                 <router-link :to="`/detail/${v.id}`">
                   <h3>
                      <p>{{v.title}}</p>
@@ -62,7 +62,7 @@
 </template>
 <script>
 
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState , mapActions} from 'vuex';
 import axios from 'axios';
 import AddBoard from './AddBoard.vue';
 
@@ -73,8 +73,7 @@ import AddBoard from './AddBoard.vue';
      
        listDisplay : false,
        listStyle1 : true,
-       listStyle2 : false,
-       lists : [],
+       listStyle2 : false
     }
   },
   created(){
@@ -83,28 +82,37 @@ import AddBoard from './AddBoard.vue';
   computed : {
     ...mapState({
       token : 'token',
+      isCalled : 'isCalled',
       isAddBoard : 'isAddBoard',
-      lastId : 'lastId'
+      lastId : 'lastId',
+      nowList : 'nowList'
      }),
   },
   methods : {
     ...mapMutations([
-      'setId'
+      'SET_ID',
+      'SETUP_LIST',
+      'SET_CALLING_BOARD'
+    ]),
+    ...mapActions([
+      'SET_LIST'
     ]),
     async callList(){
-      try{
-          const res = await axios.get('http://localhost:8888/api/list');
-          const data = res.data;
-          console.log(data);
-          data.forEach((v) => {
-             this.lists.push(v)
-            })
-          this.setId(data[data.length - 1].id)
-          console.log(this.lists)
-          console.log(this.lastId)
-        }catch(error){
-           return console.log(error)
-        }
+       try{
+        const data = await this.SET_LIST()
+        let answer = data
+        answer.forEach((v) => {
+            if(this.isCalled == false)
+             this.SETUP_LIST(v)
+            }) 
+        this.SET_CALLING_BOARD(true)
+        this.SET_ID(answer[answer.length - 1].id)
+        console.log(this.lastId) //현재 마지막 아이디번호
+        console.log(this.nowList) //현재 마지막 아이디번호
+      }catch(err){
+        console.log(err, '리스트 err 발생')
+      }
+
     },
     LoginState(){
        if(this.token){
@@ -112,6 +120,7 @@ import AddBoard from './AddBoard.vue';
         this.callList()
        }
        return this.listDisplay = false
+
      },
      changeListStyle1(){
         this.listStyle1 = true
@@ -278,7 +287,6 @@ import AddBoard from './AddBoard.vue';
 
   .boardList .container ul.lists{
     flex-wrap:wrap;
-    justify-content: space-between;
     gap:20px;
   }
 

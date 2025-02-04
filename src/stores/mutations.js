@@ -2,8 +2,11 @@ const mutations = {
     setPathname(state, path){
         state.pathName = path
     },
-    setId(state, id){
+    SET_ID(state, id){
         state.lastId = id
+    },
+    SET_CALLING_BOARD(state, toggle){
+        state.isCalled = toggle
     },
     LOGIN (state, token) {
         if (!token) return 
@@ -14,11 +17,13 @@ const mutations = {
     },
     SET_IS_SHOW_BOARD_SETTINGS (state, toggle) {
         state.isShowBoardSettings = toggle
-        console.log(state.isShowBoardSettings)
     },
     SET_IS_ADD_BOARD (state, toggle) {
         state.isAddBoard = toggle
       },
+    SETUP_LIST(state, data){
+      state.nowList.push(data);  // data를 목록에 추가
+    }
 }
 
 export default mutations

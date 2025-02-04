@@ -55,7 +55,6 @@ export default{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap:30px;
     background-color: #eaeaea;
     border-bottom:1px solid #2d2e83;
     z-index:99999;
@@ -80,10 +79,12 @@ export default{
    cursor: pointer;
    width: 1.3vw;
    height: 1.3vw;
+   padding-right:30px;
    background-image: url('../assets/media/arrowBefore.png');
-   background-position: center center;
+   background-position: left center;
    background-repeat: no-repeat;
    background-size: contain;
+
  }
 header a img{
      width: 100%;

@@ -64,14 +64,18 @@ import AddBoard from './AddBoard.vue'
     methods: {
     ...mapMutations([
         'LOGOUT',
-        'SET_IS_ADD_BOARD'
+        'SET_IS_ADD_BOARD',
+        'SET_CALLING_BOARD'
     ]),
     LoginState(){ 
-     if(this.token){ return this.loginDisplay = true }
+     if(this.token){ 
+      return this.loginDisplay = true
+    }
      return this.loginDisplay = false
     },
     LogoutEvet(){
     return this.LOGOUT(false),
+    this.SET_CALLING_BOARD(false),
     this.loginDisplay = false
     },
     sideMenuOpen(){

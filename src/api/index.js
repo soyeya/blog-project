@@ -18,3 +18,9 @@ const request = (method, url, data) => {
       return request('post', '/api/login', {email, password}) 
     }
   }
+
+  export const list = {
+    fetch() {
+      return request('get', `/api/list`)
+    },
+  }

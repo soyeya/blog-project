@@ -23,90 +23,73 @@ app.use(cors({
     next();
 });
 
-const db = mysql.createConnection({
-    host : "127.0.0.1",
-    user : "root",
-    password : "wlfkfgksp!!55",
-    database : "myDiary",
-    waitForConnections: true,
-    port: 3306  
-  });
+// const db = mysql.createConnection({
+//     host : "127.0.0.1",
+//     user : "root",
+//     password : "wlfkfgksp!!55",
+//     database : "myDiary",
+//     waitForConnections: true,
+//     port: 3306  
+//   });
 
-db.connect((err) => {
-if (err) {
-    console.error('MySQL 연결 실패:', err);
-    return;
-}
-console.log('MySQL 연결 성공');
-});
-
+// db.connect((err) => {
+// if (err) {
+//     console.error('MySQL 연결 실패:', err);
+//     return;
+// }
+// console.log('MySQL 연결 성공');
+// });
 
 
 app.get("/", (req, res) => {
     res.send("myDiary Database")
 })
 
+
+/* 로그인 */
 app.post("/api/login" , async(req, res) => {
 
 const sqlQuery = `SELECT * FROM LOGIN`;
-const values = await req.body; //post로 받은 email, password값
+const values = req.body; //post로 받은 email, password값
+const [id, password] = values;
+
 try{
-DATASQL.db.query(sqlQuery, (err, results) => {
-
-    if (err) {
-    res.send({ error: '데이터 조회 실패' });
-    return;
-    }
-    if(values[0] === results[0].userId && values[1] === results[0].userPassword){
-      return res.send('true');
-    }else{
-      res.send('false'); 
-    }
-    console.log(results);
-    console.log(values);
- });
-    
-}catch(err){
-    return `데이터 불러오기 오류, ${err}`
+await DATASQL.db.promise().query(sqlQuery)
+if(id === results[0].userId && password === results[0].userPassword){
+  return res.status(200).send({ message : "성공적으로 로그인이 되었습니다"});
 }
-
+}catch(err){
+    return res.status(500).send({error: `로그인 실패 ${err.message}`})
+}
 })
 
-app.get("/api/list" , async(req, res) => {
+/* 목록 리스트 불러오기 */
+app.get("/api/list" , async(req, res) => { 
 
   const sqlQuery = `SELECT * FROM DETAIL`;
+
   try{
-    DATASQL.db.query(sqlQuery, (err, results) => {
-        if (err) {
-        res.send({ error: '데이터 조회 실패' });
-        return;
-        }
-        res.send(results);
-        console.log(results);
-     });
+    await DATASQL.db.promise().query(sqlQuery)
+    if (err) { res.send({ error: '데이터 조회 실패' }); return;}
+    res.status(200).send(results);
+    console.log(results);
     }catch(err){
-        return `데이터 불러오기 오류, ${err}`
+    return `데이터 불러오기 오류, ${err}`
     }
 })
 
+/* 보드추가 */
 app.post("/api/addList" , async(req, res) => {
-
-  const values = await req.body;
-  const newList = `INSERT INTO DETAIL(id, title, content, img) VALUES('${values[0]}','${values[1]}','${values[2]}','${values[3]}')`;
-  const sqlQuery = `SELECT * FROM DETAIL`;
+  const values = req.body; //받아온 데이터 배열
+  const [id, title, content, img] = values; //배열에서 값 추출
+  const newList = `INSERT INTO DETAIL(id, title, content, img) VALUES('${id}','${title}', '${content}','${img}')`;
   try{
-    DATASQL.db.query(sqlQuery, (err, results) => {
-    
-        if (err) {
-        res.send({ error: '데이터 조회 실패' });
-        return;
-        }
-        console.log(results);
-        console.log(values);
-     });
-        
+    if(values.length == 4){
+     await DATASQL.db.promise().query(newList)
+     res.status(200).send({ message : '데이터가 성공적으로 추가되었습니다'})
+    }
     }catch(err){
-        return `데이터 불러오기 오류, ${err}`
+        return res.status(500).send({error: `데이터추가 실패 ${err.message}`})
     }
 })
  

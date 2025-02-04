@@ -35,6 +35,15 @@ import { mapState, mapMutations } from 'vuex';
         isShowBoardSettings : 'isShowBoardSettings'
        })
     },
+    mounted() {
+      this.$nextTick(() => {
+      console.log('mounted작동')
+      Array.from(this.$el.querySelectorAll('.color-picker a')).forEach(el => {
+        el.style.backgroundColor = el.dataset.value;
+        console.log(el.dataset.value)
+      })
+    })
+    },
     methods : {
       ...mapMutations([
         'SET_IS_SHOW_BOARD_SETTINGS'

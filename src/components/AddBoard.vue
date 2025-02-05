@@ -74,6 +74,7 @@ export default{
             }
             this.SET_IS_ADD_BOARD(false);
             this.SET_CALLING_BOARD(false);
+            this.SET_ID(this.lastId+1); //마지막 id값 업데이트
             }
         
         }

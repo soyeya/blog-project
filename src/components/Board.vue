@@ -1,9 +1,9 @@
 <template>
     <div class="boardList">
          <div class="profileContainer">
-          <h3 class="titles" v-if="listDisplay">어서오세요. test123님</h3>
+          <h3 class="titles" v-if="listDisplay" :style="`color : ${this.bodyColor}`">어서오세요. test123님</h3>
            <h3 class="titles" v-else>Hello, We Are Look-Diary</h3>
-           <div class="profileContent" href="" v-if="listDisplay">
+           <div class="profileContent" :style="`background-color : ${this.bodyColor}`" href="" v-if="listDisplay">
             <div class="imgBoxs">
               <img src="../assets/media/profile.png" alt="profile">
             </div>
@@ -14,7 +14,7 @@
                </h5>
             </div>
           </div>
-          <div class="profileContent" v-else>
+          <div class="profileContent" :style="`background-color : ${this.bodyColor}`" v-else>
             <div class="text">
                 <router-link :to="'/login'">로그인을 해주세요</router-link>
             </div>
@@ -85,39 +85,43 @@ import AddBoard from './AddBoard.vue';
       isCalled : 'isCalled',
       isAddBoard : 'isAddBoard',
       lastId : 'lastId',
-      nowList : 'nowList'
+      nowList : 'nowList',
+      bodyColor : 'bodyColor'
      }),
+  },
+  mounted(){
   },
   methods : {
     ...mapMutations([
       'SET_ID',
       'SETUP_LIST',
-      'SET_CALLING_BOARD'
+      'SET_CALLING_BOARD',
+      'LIST_RESET'
     ]),
     ...mapActions([
       'SET_LIST'
     ]),
     async callList(){
-       try{
-        const data = await this.SET_LIST()
-        let answer = data
+      console.log('callList호출')
+        const list = await this.SET_LIST()
+        let answer = list
+        console.log('board_answer',list)
         answer.forEach((v) => {
             if(this.isCalled == false)
              this.SETUP_LIST(v)
             }) 
-        this.SET_CALLING_BOARD(true)
+        this.SET_CALLING_BOARD(true) //board리스트 불러오는 blooean값
         this.SET_ID(answer[answer.length - 1].id)
         console.log(this.lastId) //현재 마지막 아이디번호
-        console.log(this.nowList) //현재 마지막 아이디번호
-      }catch(err){
-        console.log(err, '리스트 err 발생')
-      }
+        console.log(this.nowList) //현재 board list 목록
+     
 
     },
     LoginState(){
-       if(this.token){
-        return this.listDisplay = true,
-        this.callList()
+       if(this.token == true){
+        console.log('board token', this.token)
+        return this.callList(),
+        this.listDisplay = true
        }
        return this.listDisplay = false
 
@@ -137,7 +141,6 @@ import AddBoard from './AddBoard.vue';
         this.$refs.listBtn01.className = ""
      }
   }
-
  }
 </script>
 <style>
@@ -169,7 +172,6 @@ import AddBoard from './AddBoard.vue';
     padding:1rem 0;
     display: flex;
     align-content: center;
-    background-color:#2d2e83;
     border-radius: 18px;
   }
 
@@ -233,10 +235,6 @@ import AddBoard from './AddBoard.vue';
     margin:0 auto;
     height: calc(100% / 2);
 
-  }
-
-  .boardList .listContainer{
-    
   }
 
   .boardList .container .tdTitle{

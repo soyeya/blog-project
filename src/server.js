@@ -54,12 +54,19 @@ const values = req.body; //post로 받은 email, password값
 const [id, password] = values;
 
 try{
-await DATASQL.db.promise().query(sqlQuery)
-if(id === results[0].userId && password === results[0].userPassword){
-  return res.status(200).send({ message : "성공적으로 로그인이 되었습니다"});
+
+const data = await DATASQL.db.promise().query(sqlQuery)
+let answer = data[0];
+console.log(answer)
+console.log(values)
+
+if(id == answer[0].userId && password === answer[0].userPassword){
+  return res.status(200).send(true),
+  console.log('로그인성공')
 }
 }catch(err){
-    return res.status(500).send({error: `로그인 실패 ${err.message}`})
+    return res.status(500).send(false),
+    console.log('로그인실패')
 }
 })
 
@@ -67,12 +74,11 @@ if(id === results[0].userId && password === results[0].userPassword){
 app.get("/api/list" , async(req, res) => { 
 
   const sqlQuery = `SELECT * FROM DETAIL`;
-
   try{
-    await DATASQL.db.promise().query(sqlQuery)
-    if (err) { res.send({ error: '데이터 조회 실패' }); return;}
-    res.status(200).send(results);
-    console.log(results);
+    const listData = await DATASQL.db.promise().query(sqlQuery) //[[]]형태의 배열로 데이터를 반환
+    const data = listData[0];
+    res.status(200).send(data);
+    console.log('list목록불러오기' , data);
     }catch(err){
     return `데이터 불러오기 오류, ${err}`
     }
@@ -93,6 +99,27 @@ app.post("/api/addList" , async(req, res) => {
     }
 })
  
+/* 보드삭제  */
+app.delete("/api/delete" , async(req, res) => {
+  const values = req.body; //받아온 id값
+  console.log('삭제할 values_id',values)
+
+  if (!Array.isArray(values) || values.length === 0 || !values[0]) {
+    return res.status(400).send({ error: '유효한 ID가 없습니다.' });
+  }
+
+  const idToDelete = values[0]; 
+  const deleteData = 'DELETE FROM DETAIL WHERE id = ?';
+
+  try{
+     await DATASQL.db.promise().query(deleteData, [idToDelete])
+     console.log(idToDelete, '삭제할 values_id')
+     res.status(200).send({ message : '데이터가 성공적으로 삭제되었습니다'})
+    }catch(err){
+        return res.status(500).send({error: `데이터삭제 실패 ${err.message}`})
+    }
+})
+
 server.listen(PORT, ()=>{
     console.log(`${PORT}로 작동중`);
   })

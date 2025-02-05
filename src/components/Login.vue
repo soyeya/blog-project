@@ -54,8 +54,7 @@ data() {
         const data = res.data;
         console.log(data)
         if(data === true){
-          return this.token = true,
-           this.$router.push('/'),
+          return this.$router.push('/'),
            this.LOGIN(true);
         }
         return window.confirm('아이디와 비밀번호가 일치하지 않습니다');

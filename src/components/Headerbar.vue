@@ -27,7 +27,8 @@ export default{
  },
  methods :{
    ...mapMutations([
-      'setPathname'
+      'setPathname',
+      'SET_CALLING_BOARD'
    ]),
    currentPathname(){
       this.setPathname(this.paths)
@@ -37,7 +38,8 @@ export default{
       console.log(this.paths)
    },
    toBackEvet(){
-     return this.$router.push('/')
+     return this.SET_CALLING_BOARD(true),
+     this.$router.push('/')
    }
  }
 }

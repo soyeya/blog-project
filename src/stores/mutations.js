@@ -22,7 +22,14 @@ const mutations = {
         state.isAddBoard = toggle
       },
     SETUP_LIST(state, data){
-      state.nowList.push(data);  // data를 목록에 추가
+        state.nowList.push(data);
+    },
+    LIST_RESET(state){
+        state.nowList = [],
+        state.isCalled = false
+    },
+    SET_COLOR(state, color){
+      state.bodyColor = color;
     }
 }
 

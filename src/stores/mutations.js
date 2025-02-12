@@ -1,5 +1,5 @@
 const mutations = {
-    setPathname(state, path){
+    SET_PATHNAME(state, path){
         state.pathName = path
     },
     SET_ID(state, id){

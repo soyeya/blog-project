@@ -63,7 +63,6 @@ export default{
             'SET_ID'
         ]),
 
-
         async addBoardData(){
             const formArray = [this.lastId+1, this.input, this.contents, this.imgs]//전달할 배열
             if(this.valid1 && this.valid2){
@@ -73,8 +72,9 @@ export default{
                 return console.log('addBoard_err')
             }
             this.SET_IS_ADD_BOARD(false);
-            this.SET_CALLING_BOARD(false);
+            this.SET_CALLING_BOARD(true);
             this.SET_ID(this.lastId+1); //마지막 id값 업데이트
+            this.$router.push('/');
             }
         
         }

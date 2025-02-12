@@ -12,7 +12,7 @@
         <div class="content">
             <textarea readonly :placeholder="value"></textarea>
         </div>
-    
+     <AddBoard v-if="this.isAddBoard"/>
     </div>
 </template>
 <script>
@@ -20,9 +20,10 @@ import { mapState } from 'vuex';
 import axios from 'axios';
 import Navbar from './Navbar.vue';
 import Headerbar from './Headerbar.vue';
+import AddBoard from './AddBoard.vue';
 
 export default{
-  components: { Navbar, Headerbar },
+  components: { Navbar, Headerbar, AddBoard },
      data(){
         return{
            lists : [],
@@ -33,7 +34,8 @@ export default{
      },
      computed : {
         ...mapState({
-            token : 'token'
+            token : 'token',
+            isAddBoard : 'isAddBoard',
      })
      },
      created(){

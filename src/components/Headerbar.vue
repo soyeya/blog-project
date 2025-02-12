@@ -8,10 +8,9 @@
 import { mapState , mapMutations } from 'vuex';
 
 export default{
- props : ["show"],
  data(){
    return{
-      toBack : this.show,
+      toBack : false,
       paths : this.$route.path
    }
  },
@@ -22,20 +21,19 @@ export default{
  },
   created(){
   this.currentPathname()
-  console.log(this.pathName)
-  console.log(this.toBack)
+  console.log('현재path는', this.pathName)
+  console.log('뒤로가기버튼', this.toBack)
  },
  methods :{
    ...mapMutations([
-      'setPathname',
+      'SET_PATHNAME',
       'SET_CALLING_BOARD'
    ]),
    currentPathname(){
-      this.setPathname(this.paths)
-      if(this.paths.indexOf('/detail') != -1){
+      this.SET_PATHNAME(this.paths)
+      if(this.paths.indexOf('/detail') != -1){ //만약 Detail 페이지라면, 뒤로가기버튼 활성화
          return this.toBack = true
       }
-      console.log(this.paths)
    },
    toBackEvet(){
      return this.SET_CALLING_BOARD(true),
